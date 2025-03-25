@@ -1,8 +1,6 @@
 ---
 title: "Readme"
-format: 
-  html:
-    embed-resources: true
+format: gfm
 ---
 
 # clase_r_madrid
