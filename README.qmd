@@ -1,3 +1,9 @@
+---
+title: "Readme"
+format: 
+  html:
+    embed-resources: true
+---
 
 # clase_r_madrid
 
