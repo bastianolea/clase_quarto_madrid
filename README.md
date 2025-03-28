@@ -60,6 +60,8 @@ Preguntará si quieres hacer _commit_ de tus archivos. _Commit_ significa agrega
 ```r
 use_github()
 ```
+Se creará un repositorio remoto en tu cuenta de GitHub con el mismo nombre que el proyecto, y se abrirá una ventana de tu navegador con el repositorio subido. 
+
 
 ### Crear un archivo `readme.md`
 Si tu proyecto/repositorio tiene este archivo, aparecerá en GitHub como descripción del código (como la que estás leyendo ahora!)
@@ -74,28 +76,64 @@ use_readme()
 
 ## Documentos Quarto 
 
-Mostrar chunks, echo, eval, enlaces, imágenes, toc
+Los [documentos Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) combinan la escritura normal con el código. La escritura, como los párrafos, títulos, y subtítulos se escriben usando la sintaxis [markdown](https://quarto.org/docs/authoring/markdown-basics.html), un lenguaje de marcado que nos permite traducir textos en html usando sencillos símbolos.
 
-HTML self-contained:
-```r
+Para crear un documento Quarto, en el menú _File_ elige _New File_ y luego _Quarto Document_.
+
+![](img/quarto_1.png)
+
+Se abrirá un documento de ejemplo que puedes usar como base para tus propios documentos. En este caso, agregamos un _chunk_ con un gráfico sencillo, y presionamos el botón **Render** para generar el documento en `html`:
+
+![](img/quarto_2.png)
+
+Como vemos, obtenemos tres archivos en nuestro proyecto: el archivo `.qmd` que contiene el código que genera el documento, el documento _renderizado_ en formato `html`, y una carpeta que contiene recursos necesarios para visualizar el documento:
+![](img/quarto_3.png)
+
+El problema es que esta carpeta, que contiene cosas como imágenes (de los gráficos), estilos y scripts, dificultan la portabilidad del documento y la posibilidad de compartirlo con otros.
+
+La buena noticia es que podemos generar un reporte Quarto **autocontenido**; es decir, que no se requieran archivos externos al documento `html`. Agregamos el siguiente código al _header_ del documento Quarto, en reemplazo del `format: html`:
+
+```yaml
 format: 
   html:
     embed-resources: true
 ```
-
-
-
+Hay que tener cuidado de que se respeten los espacios en blanco para que funcione bien. Si eliminas el reporte en `html` y la carpta `_files` y le das _render_ nuevamente al documento Quarto, verás que ahora se genera solamente el reporte en `html`, listo para poder ser compartido!
 
 ----
 
 
-
-
 ## Documento Quarto en GitHub Pages
+
+Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar GitHub Pages para hacer que nuestro documento Quarto se transforme en una página de Internet que otras personas pueden visitar tan sólo con entrar al enlace.
+
+Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento.
+
+La configuración del documento Quarto consiste en agregar un archivo de configuración a nuestro proyecto.
+
+En el panel de archivos (_File_) de RStudio, presionamos el botón _New File_ y creamos un archivo de texto en blanco, llamado `_quarto.yml`:
+
+![](quarto_4.png)
+
+En `_quarto.yml`, pegamos el siguiente código de configuración:
+
+```yaml
+project:
+  output-dir: docs
+```
+
+Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta `docs`, que es lo que necesitamos para generar nuestra página web.
+
+Si le damos _render_ al documento Quarto, se generará la carpeta `docs` con los recursos necesarios dentro.
+
+
+
 https://github.com/bastianolea/datos_sociales
 https://github.com/bastianolea/shiny_apps
 
 https://quarto.org/docs/publishing/github-pages.html
+
+
 
 use_git(), use_github()
 para poder hacerlo en github pages hay que poner que guarde todo en docs

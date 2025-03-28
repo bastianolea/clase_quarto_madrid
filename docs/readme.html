@@ -130,6 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="subir-el-repositorio-local-a-github" class="level3">
 <h3 class="anchored" data-anchor-id="subir-el-repositorio-local-a-github">Subir el repositorio local a GitHub</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se creará un repositorio remoto en tu cuenta de GitHub con el mismo nombre que el proyecto, y se abrirá una ventana de tu navegador con el repositorio subido.</p>
 </section>
 <section id="crear-un-archivo-readme.md" class="level3">
 <h3 class="anchored" data-anchor-id="crear-un-archivo-readme.md">Crear un archivo <code>readme.md</code></h3>
@@ -140,15 +141,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="documentos-quarto" class="level2">
 <h2 class="anchored" data-anchor-id="documentos-quarto">Documentos Quarto</h2>
-<p>Mostrar chunks, echo, eval, enlaces, imágenes, toc</p>
-<p>HTML self-contained:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  html<span class="sc">:</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    embed<span class="sc">-</span>resources<span class="sc">:</span> true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los <a href="https://quarto.org/docs/get-started/hello/rstudio.html">documentos Quarto</a> combinan la escritura normal con el código. La escritura, como los párrafos, títulos, y subtítulos se escriben usando la sintaxis <a href="https://quarto.org/docs/authoring/markdown-basics.html">markdown</a>, un lenguaje de marcado que nos permite traducir textos en html usando sencillos símbolos.</p>
+<p>Para crear un documento Quarto, en el menú <em>File</em> elige <em>New File</em> y luego <em>Quarto Document</em>.</p>
+<p><img src="img/quarto_1.png" class="img-fluid"></p>
+<p>Se abrirá un documento de ejemplo que puedes usar como base para tus propios documentos. En este caso, agregamos un <em>chunk</em> con un gráfico sencillo, y presionamos el botón <strong>Render</strong> para generar el documento en <code>html</code>:</p>
+<p><img src="img/quarto_2.png" class="img-fluid"></p>
+<p>Como vemos, obtenemos tres archivos en nuestro proyecto: el archivo <code>.qmd</code> que contiene el código que genera el documento, el documento <em>renderizado</em> en formato <code>html</code>, y una carpeta que contiene recursos necesarios para visualizar el documento: <img src="img/quarto_3.png" class="img-fluid"></p>
+<p>El problema es que esta carpeta, que contiene cosas como imágenes (de los gráficos), estilos y scripts, dificultan la portabilidad del documento y la posibilidad de compartirlo con otros.</p>
+<p>La buena noticia es que podemos generar un reporte Quarto <strong>autocontenido</strong>; es decir, que no se requieran archivos externos al documento <code>html</code>. Agregamos el siguiente código al <em>header</em> del documento Quarto, en reemplazo del <code>format: html</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Hay que tener cuidado de que se respeten los espacios en blanco para que funcione bien. Si eliminas el reporte en <code>html</code> y la carpta <code>_files</code> y le das <em>render</em> nuevamente al documento Quarto, verás que ahora se genera solamente el reporte en <code>html</code>, listo para poder ser compartido!</p>
 <hr>
 </section>
 <section id="documento-quarto-en-github-pages" class="level2">
 <h2 class="anchored" data-anchor-id="documento-quarto-en-github-pages">Documento Quarto en GitHub Pages</h2>
+<p>Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar GitHub Pages para hacer que nuestro documento Quarto se transforme en una página de Internet que otras personas pueden visitar tan sólo con entrar al enlace.</p>
+<p>Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento.</p>
+<p>La configuración del documento Quarto consiste en agregar un archivo de configuración a nuestro proyecto.</p>
+<p>En el panel de archivos (<em>File</em>) de RStudio, presionamos el botón <em>New File</em> y creamos un archivo de texto en blanco, llamado <code>_quarto.yml</code>:</p>
+<p><img src="quarto_4.png" class="img-fluid"></p>
+<p>En <code>_quarto.yml</code>, pegamos el siguiente código de configuración:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta <code>docs</code>, que es lo que necesitamos para generar nuestra página web.</p>
+<p>Si le damos <em>render</em> al documento Quarto, se generará la carpeta <code>docs</code> con los recursos necesarios dentro.</p>
 <p>https://github.com/bastianolea/datos_sociales https://github.com/bastianolea/shiny_apps</p>
 <p>https://quarto.org/docs/publishing/github-pages.html</p>
 <p>use_git(), use_github() para poder hacerlo en github pages hay que poner que guarde todo en docs _quarto.yml con output-dir: docs para github</p>
@@ -168,31 +186,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>install.packages(“blogdown”)</p>
 <p>blogdown::install_hugo()</p>
 <p>crear proyecto</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(blogdown)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new_site</span>(<span class="at">theme =</span> <span class="st">"hugo-apero/hugo-apero"</span>, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">format =</span> <span class="st">"toml"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">sample =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">empty_dirs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(blogdown)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new_site</span>(<span class="at">theme =</span> <span class="st">"hugo-apero/hugo-apero"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">format =</span> <span class="st">"toml"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">sample =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">empty_dirs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>cambiar temas en [params] https://hugo-apero-docs.netlify.app/learn/color-themes/</p>
 <p>tema manual: crear archivo assets/tema.scss aplicar en config.toml como custom_theme = “tema”</p>
 <p>tipografías https://hugo-apero-docs.netlify.app/learn/fonts/</p>
 <p>Conectar a Netlify configurar baseURL en config.toml</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">check_netlify</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">check_netlify</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>subdominio rbind: https://github.com/rbind/support/issues/new</p>
 <p>secciones: blog, projects, talks</p>
 <p>crear nuevas secciones: https://hugo-apero-docs.netlify.app/start/section-config/#reusing-sections</p>
 <p>crear post:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crear un post</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">new_post</span>(<span class="at">title =</span> <span class="st">"Nubes aleatorias en ggplot"</span>, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subdir =</span> <span class="st">"blog/"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">file =</span> <span class="st">"blog/ggplot_nubes/index.qmd"</span>, <span class="co"># define el "slug", la dirección url del post</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">author =</span> <span class="st">"Bastián Olea Herrera"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"gráficos"</span>, <span class="st">"curiosidades"</span>))</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># format: </span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   hugo-md:</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     output-file: "index"</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     output-ext: "md"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crear un post</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">new_post</span>(<span class="at">title =</span> <span class="st">"Nubes aleatorias en ggplot"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subdir =</span> <span class="st">"blog/"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">file =</span> <span class="st">"blog/ggplot_nubes/index.qmd"</span>, <span class="co"># define el "slug", la dirección url del post</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">author =</span> <span class="st">"Bastián Olea Herrera"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"gráficos"</span>, <span class="st">"curiosidades"</span>))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># format: </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   hugo-md:</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     output-file: "index"</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     output-ext: "md"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>https://bastianolea.rbind.io/blog/hugo_blog_nuevo/</p>
 <hr>
 </section>
