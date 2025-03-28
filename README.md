@@ -105,15 +105,26 @@ Hay que tener cuidado de que se respeten los espacios en blanco para que funcion
 
 ## Documento Quarto en GitHub Pages
 
-Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar GitHub Pages para hacer que nuestro documento Quarto se transforme en una página de Internet que otras personas pueden visitar tan sólo con entrar al enlace.
+Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar [GitHub Pages](https://pages.github.com) para hacer que nuestro documento Quarto se transforme en una página de internet que otras personas pueden visitar tan sólo con entrar al enlace.
 
 Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento.
 
-La configuración del documento Quarto consiste en agregar un archivo de configuración a nuestro proyecto.
+La configuración del documento Quarto consiste revisar el nombre del archivo, y en agregar un archivo de configuración a nuestro proyecto que hará que se guarden los archivos necesarios en una sola carpeta.
 
-En el panel de archivos (_File_) de RStudio, presionamos el botón _New File_ y creamos un archivo de texto en blanco, llamado `_quarto.yml`:
+Esto es importante, porque así GitHub Pages sabrá que éste es el documento específico que queremos que sea nuestra página web.
 
-![](quarto_4.png)
+Revisemos el *nombre del documento Quarto**. Para que nuestro documento Quarto se publique como una página GitHub Pages, debe llamarse `index.qmd` (para que se genere un documento `index.html`), o bien, puede llamarse como queramos, pero agregando el siguiente código al header `yaml` del documento Quarto:
+
+```yaml
+format: 
+  html:
+    output-file: "index"
+```
+De este modo, el documento `html` resultante de nuestro documento Quarto se llamará `index.html`. 
+
+El siguiente paso de configuración implica agregar un **archivo de configuración** al proyecto. En el panel de archivos (_File_) de RStudio, presionamos el botón _New File_ y creamos un archivo de texto en blanco, llamado `_quarto.yml`:
+
+![](img/quarto_4.png)
 
 En `_quarto.yml`, pegamos el siguiente código de configuración:
 
@@ -125,6 +136,24 @@ project:
 Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta `docs`, que es lo que necesitamos para generar nuestra página web.
 
 Si le damos _render_ al documento Quarto, se generará la carpeta `docs` con los recursos necesarios dentro.
+
+Ahora tenemos que subir estos cambios al repositorio remoto GitHub. En la pestaña _Terminal_ de RStudio (al lado de la consola) ejecutamos los tres siguientes comandos:
+```bash
+git add .
+git commit -m "documento quarto en docs"
+git push
+```
+Con el primer comando le pedimos que todos los archivos nuevos sean considerados para el _commit_, con el segundo creamos el _commit_ y le damos un mensaje, y con el tercero hacemos _push_ para subir los cambios al repositorio remoto.
+
+Si vamos a GitHub debiesen estar nuestros nuevos archivos arriba. Ahora vamos a configurar GitHub para que genere una página web a partir del documento Quarto. Vamos a la seccion _Settings_:
+
+![](img/quarto_5.png)
+
+Dentro de _Settings_, en el menú izquierdo vamos a _Pages_. Dentro de _Pages_, tenemos que seleccionar la rama del repositorio que queremos usar (usualmente _main_ o _master_), y especificar que queremos apuntar a la carpeta `/docs`. Luego presionamos _Save_.
+
+Ojo que con este método sólo podremos publicar un documento Quarto por repositorio.
+
+
 
 
 
