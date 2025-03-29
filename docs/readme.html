@@ -84,24 +84,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Charla R Madrid</h1>
 <p>27-03-2025</p>
 <p><em>Reunión Grupo de R: Jueves 27 de marzo de 2025</em></p>
-<p>Bastián nos contará detalles sobre formas de compartir los proyectos que desarrollamos en R, para incentivar a que la gente comparta sus productos:</p>
-<ul>
-<li>crear repositorios en github</li>
-<li>crear páginas estáticas con Quarto y GitHub Pages</li>
-<li>crear blogs desde R con Quarto y Netlify</li>
-<li>crear y publicar aplicaciones Shiny</li>
-</ul>
+<p>En este tutorial veremos cuatro formas relativamente sencillas, y ordenadas de menor a mayor dificultad, para crear nuestros propios espacios en Internet para poder compartir nuestras creaciones, aprendizajes y quienes somos usando R, y de forma completamente gratuita. En una tarde podrías tener tu propio sitio web para presentarte, o para subir las cosas que has aprendido, o para destacar tu trabajo!</p>
+<p>Los contenidos son:</p>
+<ol type="1">
+<li>Crear repositorios en github</li>
+<li>Crear páginas estáticas con documentos Quarto y GitHub Pages</li>
+<li>Crear sitios web con Quarto</li>
+<li>Crear blogs con Quarto</li>
+<li>Crear blogs con Hugo Apéro</li>
+</ol>
 <div style="max-width: 350px;">
 <p><img src="afiche.jpg" class="img-fluid"></p>
 </div>
+<p>Para más información, tutoriales y contacto, <a href="https://bastianolea.rbind.io">visita mi sitio web.</a></p>
 <hr>
 <section id="github" class="level2">
 <h2 class="anchored" data-anchor-id="github">GitHub</h2>
 <section id="conectar-r-a-github" class="level3">
 <h3 class="anchored" data-anchor-id="conectar-r-a-github">Conectar R a GitHub</h3>
 <ul>
-<li><a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/">Tutorial escrito por mi</a></li>
-<li>Libro tutorial: <a href="https://happygitwithr.com">https://happygitwithr.com</a></li>
+<li><a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/">Tutorial más detallado sobre esto escrito por mi</a></li>
+<li>Libro tutorial para aprender a usar git con R: <a href="https://happygitwithr.com">https://happygitwithr.com</a></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"usethis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
@@ -158,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="documento-quarto-en-github-pages" class="level2">
 <h2 class="anchored" data-anchor-id="documento-quarto-en-github-pages">Documento Quarto en GitHub Pages</h2>
 <p>Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar <a href="https://pages.github.com">GitHub Pages</a> para hacer que nuestro documento Quarto se transforme en una página de internet que otras personas pueden visitar tan sólo con entrar al enlace.</p>
-<p>Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento.</p>
+<p>Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento. Todas estas instrucciones están detalladas <a href="https://quarto.org/docs/publishing/github-pages.html">en esta guía oficial</a>, pero a continuación te resumo lo principal.</p>
 <p>La configuración del documento Quarto consiste revisar el nombre del archivo, y en agregar un archivo de configuración a nuestro proyecto que hará que se guarden los archivos necesarios en una sola carpeta.</p>
 <p>Esto es importante, porque así GitHub Pages sabrá que éste es el documento específico que queremos que sea nuestra página web.</p>
 <p>Revisemos el *nombre del documento Quarto**. Para que nuestro documento Quarto se publique como una página GitHub Pages, debe llamarse <code>index.qmd</code> (para que se genere un documento <code>index.html</code>), o bien, puede llamarse como queramos, pero agregando el siguiente código al header <code>yaml</code> del documento Quarto:</p>
@@ -173,6 +176,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta <code>docs</code>, que es lo que necesitamos para generar nuestra página web.</p>
 <p>Si le damos <em>render</em> al documento Quarto, se generará la carpeta <code>docs</code> con los recursos necesarios dentro.</p>
+<p>Otra configuración que debemos crear para GitHub Pages se hace mediante la creación de un archivo vacío. En el proyecto desde RStudio creamos un nuevo archivo que se llame <code>.nojekyll</code>, y que esté vacío. Este archivo es para decirle a GitHub Pages que no procese el sitio con Jekyll, porque del sitio nos encargamos nosotres.</p>
+<p><img src="img/nojekyll.png" class="img-fluid"></p>
 <p>Ahora tenemos que subir estos cambios al repositorio remoto GitHub. En la pestaña <em>Terminal</em> de RStudio (al lado de la consola) ejecutamos los tres siguientes comandos:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"documento quarto en docs"</span></span>
@@ -181,78 +186,166 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Si vamos a GitHub debiesen estar nuestros nuevos archivos arriba. Ahora vamos a configurar GitHub para que genere una página web a partir del documento Quarto. Vamos a la seccion <em>Settings</em>:</p>
 <p><img src="img/quarto_5.png" class="img-fluid"></p>
 <p>Dentro de <em>Settings</em>, en el menú izquierdo vamos a <em>Pages</em>. Dentro de <em>Pages</em>, tenemos que seleccionar la rama del repositorio que queremos usar (usualmente <em>main</em> o <em>master</em>), y especificar que queremos apuntar a la carpeta <code>/docs</code>. Luego presionamos <em>Save</em>.</p>
+<p><img src="img/quarto_6.png" class="img-fluid"></p>
+<p>Se tomará unos segundos o minutos en generar la página web, pero luego aparecerá el siguiente mensaje que te permitirá acceder al sitio:</p>
+<p><img src="img/quarto_7.png" class="img-fluid"></p>
+<p>¡Listo! Ahora puedes compartir tu página con todo el mundo. El enlace será algo como <code>https://usuario.github.io/repositorio/</code></p>
 <p>Ojo que con este método sólo podremos publicar un documento Quarto por repositorio.</p>
-<p>https://github.com/bastianolea/datos_sociales https://github.com/bastianolea/shiny_apps</p>
-<p>https://quarto.org/docs/publishing/github-pages.html</p>
-<p>use_git(), use_github() para poder hacerlo en github pages hay que poner que guarde todo en docs _quarto.yml con output-dir: docs para github</p>
-<p>settings &gt; pages &gt; publicar branch: /docs</p>
+<p>Puedes ver las instrucciones completas para este proceso <a href="https://quarto.org/docs/publishing/github-pages.html">en esta guía oficial.</a></p>
 <hr>
 </section>
 <section id="sitios-web-quarto-en-github-pages" class="level2">
 <h2 class="anchored" data-anchor-id="sitios-web-quarto-en-github-pages">Sitios web Quarto en GitHub Pages</h2>
-<p>crear proyecto quarto website</p>
-<p>se pueden linkear otros documentos en navbar (en _quarto.yml) left: - text: “Prueba” href: /prueba.html</p>
-<p>theme: lux https://quarto.org/docs/output-formats/html-themes.html#overview</p>
-<p>use_git(), use_github()</p>
-<p>settings &gt; pages &gt; publicar branch: /docs</p>
-<p>Estilo de página about: https://quarto.org/docs/websites/website-about.html#templates</p>
+<p>Otra opción que tenemos para construir sitios más completos, pero también basados en documentos Quarto, donde podamos combinar texto y código, es <a href="https://quarto.org/docs/websites/">crear un sitio web Quarto.</a></p>
+<p>Con esta modalidad de documentos Quarto podemos crear un sitio web con múltiples secciones, enlaces, página de presentación, y más, que te puede servir como un espacio en Internet para presentarte y que otras personas te encuentren, y puedan conocer tu trabajo y trayectoria.</p>
+<section id="crear-el-sitio-web-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="crear-el-sitio-web-quarto">Crear el sitio web Quarto</h3>
+<p>Al crear un nuevo proyecto desde RStudio podemos elegir la opción <em>Quarto Website</em>:</p>
+<p><img src="img/website_1.png" class="img-fluid"></p>
+<p>Se abrirán una nueva sesión de R y veremos que nuestro proyecto ya viene con varios archivos dentro. Primero que nada, presionemos <em>Render</em> para previsualizar lo que tenemos como base:</p>
+<p><img src="img/website_2.png" class="img-fluid"></p>
+<p>El proyecto ya viene con un sitio web funcional, que podemos explorar. Viene con dos páginas por defecto, <code>index.qmd</code> y <code>about.qmd</code>. Ambas puedes modificarlas a tu gusto con el contenido que desees.</p>
+<p>Estas páginas aparecen en la barra de navegación (arriba del sitio web, o en el lado izquierdo si la pantalla/ventana es pequeña), para que tus usuarios puedan acceder a ellas.</p>
+</section>
+<section id="agregar-páginas-a-tu-sitio" class="level3">
+<h3 class="anchored" data-anchor-id="agregar-páginas-a-tu-sitio">Agregar páginas a tu sitio</h3>
+<p>Para agregar nuevas páginas al sitio, simplemente creamos nuevos documentos Quarto normalmente (<em>New File</em>, <em>Quarto Document</em>). Para hacer que sean agregados a la barra de navegación, entra al archivo de configuración de tu sitio, <code>_quarto.yml</code>. En este archivo, verás la configuración general de tu sitio:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"tutorial_sitio_web_quarto"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esa es la lista de páginas de tu sitio web. Al igual como sale hecho con la página <code>about.qmd</code>, si agregas ahí el nombre de un documento Quarto nuevo, será agregado a la barra de navegación.</p>
+<p>Estas páginas también pueden ser enlaces a cualquier otro sitio web. Por ejemplo, si quieres agregar un enlace a tu GitHub o a alguna red social, haz lo siguiente:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"tutorial_sitio_web_quarto"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">icon</span><span class="kw">:</span><span class="at"> github</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">href</span><span class="kw">:</span><span class="at"> https://github.com/bastianolea</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">icon</span><span class="kw">:</span><span class="at"> linkedin</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">href</span><span class="kw">:</span><span class="at"> https://www.linkedin.com/in/bastianolea/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los enlaces aparecerán con los logos de las redes sociales que definas! Sólo recuerda que los enlaces tienen que empezar con <code>https://</code>.</p>
+</section>
+<section id="cambiar-temas" class="level3">
+<h3 class="anchored" data-anchor-id="cambiar-temas">Cambiar temas</h3>
+<p>Dentro del mismo documento <code>_quarto.yml</code> puedes cambiar el tema de tu sitio web, para darle un toque más personalizado. Puedes <a href="https://quarto.org/docs/output-formats/html-themes.html#overview">elegir entre 25 temas, que puedes conocer en esta guía.</a></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> lux</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La página <code>about.qmd</code> <a href="https://quarto.org/docs/websites/website-about.html#templates">también puede personalizarse</a>.</p>
+</section>
+<section id="publicar-el-sitio-en-github-pages" class="level3">
+<h3 class="anchored" data-anchor-id="publicar-el-sitio-en-github-pages">Publicar el sitio en GitHub Pages</h3>
+<p>Para publicar el sitio en GitHub Pages tenemos que seguir las mismas <a href="https://quarto.org/docs/publishing/github-pages.html">instrucciones para publicar en GitHub Pages</a> que seguimos en el paso anterior:</p>
+<p>Primero, en el archivo de configuración <code>_quarto.yml</code> agregamos <code>output-dir: docs</code> debajo de <code>project:</code> y hacemos <em>Render</em> al documento <code>index.qmd</code>.</p>
+<p>También podemos ejecutar <code>quarto render</code> desde la pestaña de Terminal para reconstruir el sitio completo.</p>
+<p>En el proyecto desde RStudio, creamos un nuevo archivo vacío que se llame <code>.nojekyll</code>, para decirle a GitHub Pages que no procese el sitio con Jekyll. Si no haces esto, cuando entres a un post del blog te aparecerá un error 404! 😨</p>
+<p>Luego debemos hacer que nuestro proyecto sea un repositorio git (<code>usethis::use_git()</code>) y subir el repositorio a GitHub (<code>usethis::use_github()</code>), o si ya era un repositorio git y ya estaba en GitHub, hacer <code>git add.</code>, <code>git commit -m "actualizacion"</code>, y <code>git push</code> desde la pestaña Terminal.</p>
+<p>Una vez que subimos nuestros cambios al repositorio remoto, vamos al repositorio en GitHub, <em>Settings</em>, <em>Pages</em>, y configuramos el repositorio para que genere la página desde <code>/docs</code>:</p>
+<p><img src="img/quarto_6.png" class="img-fluid"></p>
+<p>Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.</p>
+<p><img src="img/website_3.png" class="img-fluid"></p>
 <hr>
-<p>Blog Hugo https://bastianolea.rbind.io/blog/hugo_blog_nuevo/ https://hugo-apero-docs.netlify.app/</p>
-<p>install.packages(“blogdown”)</p>
-<p>blogdown::install_hugo()</p>
-<p>crear proyecto</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(blogdown)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new_site</span>(<span class="at">theme =</span> <span class="st">"hugo-apero/hugo-apero"</span>, </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">format =</span> <span class="st">"toml"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">sample =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">empty_dirs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>cambiar temas en [params] https://hugo-apero-docs.netlify.app/learn/color-themes/</p>
-<p>tema manual: crear archivo assets/tema.scss aplicar en config.toml como custom_theme = “tema”</p>
-<p>tipografías https://hugo-apero-docs.netlify.app/learn/fonts/</p>
-<p>Conectar a Netlify configurar baseURL en config.toml</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">check_netlify</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>subdominio rbind: https://github.com/rbind/support/issues/new</p>
-<p>secciones: blog, projects, talks</p>
-<p>crear nuevas secciones: https://hugo-apero-docs.netlify.app/start/section-config/#reusing-sections</p>
-<p>crear post:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crear un post</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">new_post</span>(<span class="at">title =</span> <span class="st">"Nubes aleatorias en ggplot"</span>, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subdir =</span> <span class="st">"blog/"</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">file =</span> <span class="st">"blog/ggplot_nubes/index.qmd"</span>, <span class="co"># define el "slug", la dirección url del post</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">author =</span> <span class="st">"Bastián Olea Herrera"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"gráficos"</span>, <span class="st">"curiosidades"</span>))</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># format: </span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   hugo-md:</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     output-file: "index"</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     output-ext: "md"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>https://bastianolea.rbind.io/blog/hugo_blog_nuevo/</p>
-<hr>
+</section>
 </section>
 <section id="blog-quarto" class="level2">
 <h2 class="anchored" data-anchor-id="blog-quarto">Blog Quarto</h2>
-<p>https://quarto.org/docs/websites/website-blog.html</p>
+<p>Una tercera opción para presentarte al mundo por internet usando Quarto es <a href="https://quarto.org/docs/websites/website-blog.html">crear un blog Quarto.</a></p>
+<p>Un blog funciona casi igual que un sitio web Quarto, con la diferencia de que el contenido está centrado en múltiples documentos Quarto que poseen más metadatos que le permiten agruparlos en categorías, en base a etiquetas, y ordenarlos por fechas. De este modo, tendrá un sitio web de presentación pero que además podrás ir subiéndole contenido periódicamente para ir compartiendo las cosas que haces. Recordemos que todo lo que hemos aprendido sobre R ácido gracias a personas que han querido compartir lo que saben, así que anímate a compartir lo que aprendes y lo que has creado!</p>
+<section id="crear-un-blog" class="level3">
+<h3 class="anchored" data-anchor-id="crear-un-blog">Crear un blog</h3>
+<p>Crear un nuevo proyecto desde RStudio, elegimos la opción <em>Quarto Blog</em>:</p>
+<p><img src="img/blog_1.png" class="img-fluid"></p>
+<p>De la misma forma que cuando creamos el sitio web Quarto, el proyecto aparecerá con los archivos necesarios para tener un blog mínimo. Si presionamos <em>Render</em> podremos provisionar nuestro blog:</p>
+<p><img src="img/blog_2.png" class="img-fluid"></p>
+</section>
+<section id="agregar-posts-al-blog" class="level3">
+<h3 class="anchored" data-anchor-id="agregar-posts-al-blog">Agregar posts al blog</h3>
+<p>El funcionamiento del blog es idéntico al del sitio web, con la distinción de que la idea es ir agregando publicaciones.</p>
+<p>Dentro de la carpeta <code>posts</code> veremos que se encuentran las dos publicaciones de ejemplo que vienen con el proyecto. Si abrimos una de ellas, veremos que en su encabezado posee los metadatos que caracterizan a cada publicación:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Mi primera publicación en mi blog Quarto"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Bastián Olea"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2025-03-28"</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">categories</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">noticias</span><span class="kw">,</span><span class="at"> R</span><span class="kw">,</span><span class="at"> programación</span><span class="kw">]</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">"image.jpg"</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Entonces, para crear una nueva publicación, creamos una carpeta dentro de <code>posts</code> (el nombre de la carpeta será la dirección de la publicación), y dentro de la carpeta creamos un documento Quarto llamado <code>index.qmd</code> con un encabezado que contenga título, autor, fecha, y etiquetas.</p>
+<p>Si presionamos <em>Render</em> para generar el post, veremos que en el panel <em>Viewer</em> de RStudio se previsualiza nuestro blog!</p>
+<p><img src="img/blog_3.png" class="img-fluid"></p>
+</section>
+<section id="subir-el-blog-quarto-a-github-pages" class="level3">
+<h3 class="anchored" data-anchor-id="subir-el-blog-quarto-a-github-pages">Subir el blog Quarto a GitHub Pages</h3>
+<p>Nuevamente, las instrucciones para hacer que nuestro blog aparezca GitHub Pages son las mismas:</p>
+<ol type="1">
+<li>En <code>_quarto.yml</code> agregamos <code>output-dir: docs</code> debajo de <code>project:</code>.</li>
+<li>En el proyecto, creamos un nuevo archivo que se llame <code>.nojekyll</code>, vacío (para decirle a GitHub Pages que no procese el sitio con Jekyll)</li>
+<li>En la pestaña de terminal ejecutamos <code>quarto render</code> para construir el sitio completo.</li>
+<li>Creamos un repositorio git (<code>usethis::use_git()</code>)</li>
+<li>Subimos el repositorio a GitHub (<code>usethis::use_github()</code>)</li>
+<li>En GitHub, entramos a <em>Settings</em>, luego a <em>Pages</em>, y configuramos el repositorio para que genere la página desde <code>/docs</code></li>
+</ol>
+<p>Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.</p>
+<p><img src="img/website_3.png" class="img-fluid"></p>
 <p>Instrucciones para subir a GitHub https://quarto.org/docs/publishing/github-pages.html#render-to-docs _quarto.yml con output-dir: docs para github touch .nojekyll</p>
 <p>Instrucciones para Netlify https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/#deploy-with-netlify entrar new site, elegir repo, poner _site, y listo</p>
 <hr>
 </section>
-<section id="app-shiny" class="level2">
-<h2 class="anchored" data-anchor-id="app-shiny">App Shiny</h2>
+</section>
+<section id="blog-hugo" class="level2">
+<h2 class="anchored" data-anchor-id="blog-hugo">Blog Hugo</h2>
+<p>Un blog Hugo es otra forma de crear un blog desde R, que también utiliza documentos Quarto, pero cuyo sistema de construcción es distinto. Al ser <a href="https://gohugo.io">creados con Hugo,</a> resultan sitios mucho más personalizables, pero por lo mismo también pueden ser más complejos de mantener.</p>
+<p>Como ejemplo, <a href="https://bastianolea.rbind.io">mi propio sitio web</a> lo creé con Hugo, y <a href="https://bastianolea.rbind.io/blog/hugo_blog_nuevo/">detallé parte del proceso en un post</a>.</p>
+<p>Las instrucciones de este proceso se escapan un poco al objetivo de esta guía, pero les dejo el siguiente enlace, que corresponde al <a href="https://hugo-apero-docs.netlify.app/">tutorial oficial para crear un blog Hugo con el tema Apéro,</a> que detalla paso por paso todas las acciones que hay que hacer para construir un blog con Hugo, personalizarlo, y publicarlo usando Netlify.</p>
+<p><img src="img/hugo_0.png" class="img-fluid"></p>
+<p>Cabe mencionar que el tutorial mismo está construido en un blog Hugo Apéro.</p>
+<p>En resumidas cuentas, las instrucciones son: - Crear un nuevo proyecto de R - <code>install.packages("blogdown")</code> - <code>blogdown::install_hugo()</code> - Y ejecutar lo siguiente para crear tu blog Hugo Apéro:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(blogdown)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new_site</span>(<span class="at">theme =</span> <span class="st">"hugo-apero/hugo-apero"</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">format =</span> <span class="st">"toml"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">sample =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">empty_dirs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Luego ejecutas <code>blogdown::serve_site()</code> para previsualizar el blog creado.</p>
+<p><img src="img/hugo_1.png" class="img-fluid"></p>
+<p>Para crear un post nuevo, tenemos una conveniente función que nos ayuda:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crear un post</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>blogdown<span class="sc">::</span><span class="fu">new_post</span>(<span class="at">title =</span> <span class="st">"Nubes aleatorias en ggplot"</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subdir =</span> <span class="st">"blog/"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">file =</span> <span class="st">"blog/ggplot_nubes/index.md"</span>, <span class="co"># define el "slug", la dirección url del post</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">author =</span> <span class="st">"Bastián Olea Herrera"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"gráficos"</span>, <span class="st">"curiosidades"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="apps-shiny" class="level2">
+<h2 class="anchored" data-anchor-id="apps-shiny">Apps Shiny</h2>
+<p>Las aplicaciones Shiny son formas mucho más avanzadas y flexibles para poder compartir desarrollos en R con el mundo. Se trata de aplicaciones web completamente personalizables y que además son interactivas; significa que detrás de la aplicación web existe un proceso de R que está haciendo los cálculos para entregar resultados en tiempo real a sus usuarios.</p>
+<p>Acá te dejo dos tutoriales para aprender a usar Shiny:</p>
 <ul>
 <li><a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shiny_1/">Tutorial Shiny</a></li>
 <li><a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shinyapps/">Tutorial publicar en Shinyapps</a></li>
 </ul>
+<p>Y <a href="https://bastianolea.github.io/shiny_apps/">comparto también un sitio mío</a> (creado con Quarto y alojado en GitHub Pages) para mostrar aplicaciones Shiny qeu he creado.</p>
 <hr>
 </section>
 <section id="recursos" class="level2">
 <h2 class="anchored" data-anchor-id="recursos">Recursos:</h2>
 <ul>
 <li><a href="https://happygitwithr.com">Tutorial Git con R</a></li>
+<li><a href="https://quarto.org/docs/publishing/github-pages.html">Tutorial GitHub Pages</a></li>
+<li><a href="https://quarto.org/docs/websites/">Tutorial sitios web Quarto</a></li>
+<li><a href="https://quarto.org/docs/output-formats/html-themes.html#overview">Temas Quarto</a></li>
 <li><a href="https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/">Tutorial Blog Quarto</a></li>
 <li><a href="https://jadeyryan.com/blog/2024-02-19_beginner-quarto-netlify/">Tutorial Quarto y Netlifly</a></li>
-<li><a href="https://quarto.org/docs/output-formats/html-themes.html#overview">Temas Quarto</a></li>
-<li><a href="https://quarto.org/docs/publishing/github-pages.html">Tutorial GitHub Pages</a></li>
 </ul>
+<p>Puedes encontrar más recursos sobre R <a href="https://bastianolea.rbind.io">en mi sitio web!</a></p>
 </section>
 </section>
 

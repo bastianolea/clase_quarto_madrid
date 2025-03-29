@@ -3,24 +3,29 @@
 
 _Reunión Grupo de R: Jueves 27 de marzo de 2025_
 
-Bastián nos contará detalles sobre formas de compartir los proyectos que desarrollamos en R, para incentivar a que la gente comparta sus productos:
+En este tutorial veremos cuatro formas relativamente sencillas, y ordenadas de menor a mayor dificultad, para crear nuestros propios espacios en Internet para poder compartir nuestras creaciones, aprendizajes y quienes somos usando R, y de forma completamente gratuita. En una tarde podrías tener tu propio sitio web para presentarte, o para subir las cosas que has aprendido, o para destacar tu trabajo!
 
-* crear repositorios en github
-* crear páginas estáticas con Quarto y GitHub Pages
-* crear blogs desde R con Quarto y Netlify
-* crear y publicar aplicaciones Shiny
+Los contenidos son:
+
+1. Crear repositorios en github
+2. Crear páginas estáticas con documentos Quarto y GitHub Pages
+3. Crear sitios web con Quarto
+4. Crear blogs con Quarto
+5. Crear blogs con Hugo Apéro
 
 <div style = "max-width: 350px;">
 ![](afiche.jpg)
 </div>
+
+Para más información, tutoriales y contacto, [visita mi sitio web.](https://bastianolea.rbind.io)
 
 ----
 
 
 ## GitHub
 ### Conectar R a GitHub
-- [Tutorial escrito por mi](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
-- Libro tutorial: [https://happygitwithr.com](https://happygitwithr.com)
+- [Tutorial más detallado sobre esto escrito por mi](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
+- Libro tutorial para aprender a usar git con R: [https://happygitwithr.com](https://happygitwithr.com)
 
 ```r
 install.packages("usethis")
@@ -107,7 +112,7 @@ Hay que tener cuidado de que se respeten los espacios en blanco para que funcion
 
 Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar [GitHub Pages](https://pages.github.com) para hacer que nuestro documento Quarto se transforme en una página de internet que otras personas pueden visitar tan sólo con entrar al enlace.
 
-Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento.
+Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento. Todas estas instrucciones están detalladas [en esta guía oficial](https://quarto.org/docs/publishing/github-pages.html), pero a continuación te resumo lo principal.
 
 La configuración del documento Quarto consiste revisar el nombre del archivo, y en agregar un archivo de configuración a nuestro proyecto que hará que se guarden los archivos necesarios en una sola carpeta.
 
@@ -135,14 +140,20 @@ project:
 
 Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta `docs`, que es lo que necesitamos para generar nuestra página web.
 
-Si le damos _render_ al documento Quarto, se generará la carpeta `docs` con los recursos necesarios dentro.
+Si le damos _render_ al documento Quarto, se generará la carpeta `docs` con los recursos necesarios dentro. 
+
+Otra configuración que debemos crear para GitHub Pages se hace mediante la creación de un archivo vacío. En el proyecto desde RStudio creamos un nuevo archivo que se llame `.nojekyll`, y que esté vacío. Este archivo es para decirle a GitHub Pages que no procese el sitio con Jekyll, porque del sitio nos encargamos nosotres.
+
+![](img/nojekyll.png)
 
 Ahora tenemos que subir estos cambios al repositorio remoto GitHub. En la pestaña _Terminal_ de RStudio (al lado de la consola) ejecutamos los tres siguientes comandos:
+
 ```bash
 git add .
 git commit -m "documento quarto en docs"
 git push
 ```
+
 Con el primer comando le pedimos que todos los archivos nuevos sean considerados para el _commit_, con el segundo creamos el _commit_ y le damos un mensaje, y con el tercero hacemos _push_ para subir los cambios al repositorio remoto.
 
 Si vamos a GitHub debiesen estar nuestros nuevos archivos arriba. Ahora vamos a configurar GitHub para que genere una página web a partir del documento Quarto. Vamos a la seccion _Settings_:
@@ -151,128 +162,173 @@ Si vamos a GitHub debiesen estar nuestros nuevos archivos arriba. Ahora vamos a 
 
 Dentro de _Settings_, en el menú izquierdo vamos a _Pages_. Dentro de _Pages_, tenemos que seleccionar la rama del repositorio que queremos usar (usualmente _main_ o _master_), y especificar que queremos apuntar a la carpeta `/docs`. Luego presionamos _Save_.
 
+![](img/quarto_6.png)
+
+Se tomará unos segundos o minutos en generar la página web, pero luego aparecerá el siguiente mensaje que te permitirá acceder al sitio:
+
+![](img/quarto_7.png)
+
+¡Listo! Ahora puedes compartir tu página con todo el mundo. El enlace será algo como `https://usuario.github.io/repositorio/`
+
 Ojo que con este método sólo podremos publicar un documento Quarto por repositorio.
 
-
-
-
-
-https://github.com/bastianolea/datos_sociales
-https://github.com/bastianolea/shiny_apps
-
-https://quarto.org/docs/publishing/github-pages.html
-
-
-
-use_git(), use_github()
-para poder hacerlo en github pages hay que poner que guarde todo en docs
-_quarto.yml con output-dir: docs para github
-
-settings > pages > publicar
-branch: /docs
-
-
-
+Puedes ver las instrucciones completas para este proceso [en esta guía oficial.](https://quarto.org/docs/publishing/github-pages.html)
 
 
 ----
-
-
 
 
 ## Sitios web Quarto en GitHub Pages
-crear proyecto quarto website
 
-se pueden linkear otros documentos en navbar (en _quarto.yml)
+Otra opción que tenemos para construir sitios más completos, pero también basados en documentos Quarto, donde podamos combinar texto y código, es [crear un sitio web Quarto.](https://quarto.org/docs/websites/)
+
+Con esta modalidad de documentos Quarto podemos crear un sitio web con múltiples secciones, enlaces, página de presentación, y más, que te puede servir como un espacio en Internet para presentarte y que otras personas te encuentren, y puedan conocer tu trabajo y trayectoria.
+
+
+### Crear el sitio web Quarto
+Al crear un nuevo proyecto desde RStudio podemos elegir la opción _Quarto Website_:
+
+![](img/website_1.png)
+
+Se abrirán una nueva sesión de R y veremos que nuestro proyecto ya viene con varios archivos dentro. Primero que nada, presionemos _Render_ para previsualizar lo que tenemos como base:
+
+![](img/website_2.png) 
+
+El proyecto ya viene con un sitio web funcional, que podemos explorar. Viene con dos páginas por defecto, `index.qmd` y `about.qmd`. Ambas puedes modificarlas a tu gusto con el contenido que desees. 
+
+Estas páginas aparecen en la barra de navegación (arriba del sitio web, o en el lado izquierdo si la pantalla/ventana es pequeña), para que tus usuarios puedan acceder a ellas.
+
+
+### Agregar páginas a tu sitio
+
+Para agregar nuevas páginas al sitio, simplemente creamos nuevos documentos Quarto normalmente (_New File_, _Quarto Document_). Para hacer que sean agregados a la barra de navegación, entra al archivo de configuración de tu sitio, `_quarto.yml`. En este archivo, verás la configuración general de tu sitio:
+
+```yaml
+website:
+  title: "tutorial_sitio_web_quarto"
+  navbar:
     left:
-      - text: "Prueba"
-        href: /prueba.html
+      - href: index.qmd
+        text: Home
+      - about.qmd
+```
 
-theme: lux
-https://quarto.org/docs/output-formats/html-themes.html#overview
+Esa es la lista de páginas de tu sitio web. Al igual como sale hecho con la página `about.qmd`, si agregas ahí el nombre de un documento Quarto nuevo, será agregado a la barra de navegación. 
 
-use_git(), use_github()
+Estas páginas también pueden ser enlaces a cualquier otro sitio web. Por ejemplo, si quieres agregar un enlace a tu GitHub o a alguna red social, haz lo siguiente:
 
-settings > pages > publicar
-branch: /docs
+```yaml
+website:
+  title: "tutorial_sitio_web_quarto"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - icon: github
+        href: https://github.com/bastianolea
+      - icon: linkedin
+        href: https://www.linkedin.com/in/bastianolea/
+```
 
-Estilo de página about: https://quarto.org/docs/websites/website-about.html#templates
+Los enlaces aparecerán con los logos de las redes sociales que definas! Sólo recuerda que los enlaces tienen que empezar con `https://`.
 
+
+### Cambiar temas
+Dentro del mismo documento `_quarto.yml` puedes cambiar el tema de tu sitio web, para darle un toque más personalizado. Puedes [elegir entre 25 temas, que puedes conocer en esta guía.](https://quarto.org/docs/output-formats/html-themes.html#overview)
+
+```yaml
+format:
+  html:
+    theme: lux
+    css: styles.css
+    toc: true
+```
+
+La página `about.qmd` [también puede personalizarse](https://quarto.org/docs/websites/website-about.html#templates).
+
+
+### Publicar el sitio en GitHub Pages
+
+Para publicar el sitio en GitHub Pages tenemos que seguir las mismas [instrucciones para publicar en GitHub Pages](https://quarto.org/docs/publishing/github-pages.html) que seguimos en el paso anterior:
+
+Primero, en el archivo de configuración `_quarto.yml` agregamos `output-dir: docs` debajo de `project:` y hacemos _Render_ al documento `index.qmd`.
+
+También podemos ejecutar `quarto render` desde la pestaña de Terminal para reconstruir el sitio completo.
+
+En el proyecto desde RStudio, creamos un nuevo archivo vacío que se llame `.nojekyll`, para decirle a GitHub Pages que no procese el sitio con Jekyll. Si no haces esto, cuando entres a un post del blog te aparecerá un error 404! 😨
+
+Luego debemos hacer que nuestro proyecto sea un repositorio git (`usethis::use_git()`) y subir el repositorio a GitHub (`usethis::use_github()`), o si ya era un repositorio git y ya estaba en GitHub, hacer `git add.`, `git commit -m "actualizacion"`, y `git push` desde la pestaña Terminal.
+
+Una vez que subimos nuestros cambios al repositorio remoto, vamos al repositorio en GitHub, _Settings_, _Pages_, y configuramos el repositorio para que genere la página desde `/docs`:
+
+![](img/quarto_6.png)
+
+Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.
+
+![](img/website_3.png)
 
 
 
 ----
-
-
-
-Blog Hugo
-https://bastianolea.rbind.io/blog/hugo_blog_nuevo/
-https://hugo-apero-docs.netlify.app/
-
-install.packages("blogdown")
-
-blogdown::install_hugo()
-
-crear proyecto
-```r
-library(blogdown)
-new_site(theme = "hugo-apero/hugo-apero", 
-           format = "toml",
-           sample = FALSE,
-           empty_dirs = TRUE)
-```
-
-cambiar temas en [params]
-https://hugo-apero-docs.netlify.app/learn/color-themes/
-
-tema manual:
-crear archivo assets/tema.scss
-aplicar en config.toml como custom_theme = "tema" 
-
-tipografías
-https://hugo-apero-docs.netlify.app/learn/fonts/
-
-Conectar a Netlify
-configurar baseURL  en config.toml 
-
-```r
-blogdown::check_netlify()
-```
-
-subdominio rbind: https://github.com/rbind/support/issues/new
-
-
-secciones: blog, projects, talks
-
-crear nuevas secciones: https://hugo-apero-docs.netlify.app/start/section-config/#reusing-sections
-
-crear post:
-```r
-# crear un post
-blogdown::new_post(title = "Nubes aleatorias en ggplot", 
-                   subdir = "blog/",
-                   file = "blog/ggplot_nubes/index.qmd", # define el "slug", la dirección url del post
-                   author = "Bastián Olea Herrera",
-                   tags = c("ggplot2", "gráficos", "curiosidades"))
-
-# format: 
-#   hugo-md:
-#     output-file: "index"
-#     output-ext: "md"
-```
-https://bastianolea.rbind.io/blog/hugo_blog_nuevo/
-
-
-
-
-
-----
-
 
 
 
 ## Blog Quarto
-https://quarto.org/docs/websites/website-blog.html
+Una tercera opción para presentarte al mundo por internet usando Quarto es [crear un blog Quarto.](https://quarto.org/docs/websites/website-blog.html)
+
+Un blog funciona casi igual que un sitio web Quarto, con la diferencia de que el contenido está centrado en múltiples documentos Quarto que poseen más metadatos que le permiten agruparlos en categorías, en base a etiquetas, y ordenarlos por fechas. De este modo, tendrá un sitio web de presentación pero que además podrás ir subiéndole contenido periódicamente para ir compartiendo las cosas que haces. Recordemos que todo lo que hemos aprendido sobre R ácido gracias a personas que han querido compartir lo que saben, así que anímate a compartir lo que aprendes y lo que has creado!
+
+
+### Crear un blog
+
+Crear un nuevo proyecto desde RStudio, elegimos la opción _Quarto Blog_:
+
+![](img/blog_1.png)
+
+De la misma forma que cuando creamos el sitio web Quarto, el proyecto aparecerá con los archivos necesarios para tener un blog mínimo. Si presionamos _Render_ podremos provisionar nuestro blog:
+
+![](img/blog_2.png)
+
+
+### Agregar posts al blog
+El funcionamiento del blog es idéntico al del sitio web, con la distinción de que la idea es ir agregando publicaciones.
+
+Dentro de la carpeta `posts` veremos que se encuentran las dos publicaciones de ejemplo que vienen con el proyecto. Si abrimos una de ellas, veremos que en su encabezado posee los metadatos que caracterizan a cada publicación:
+
+```yaml
+---
+title: "Mi primera publicación en mi blog Quarto"
+author: "Bastián Olea"
+date: "2025-03-28"
+categories: [noticias, R, programación]
+image: "image.jpg"
+---
+```
+Entonces, para crear una nueva publicación, creamos una carpeta dentro de `posts` (el nombre de la carpeta será la dirección de la publicación), y dentro de la carpeta creamos un documento Quarto llamado `index.qmd` con un encabezado que contenga título, autor, fecha, y etiquetas. 
+
+Si presionamos _Render_ para generar el post, veremos que en el panel _Viewer_ de RStudio se previsualiza nuestro blog!
+
+![](img/blog_3.png)
+
+
+### Subir el blog Quarto a GitHub Pages
+
+Nuevamente, las instrucciones para hacer que nuestro blog aparezca GitHub Pages son las mismas:
+
+1. En `_quarto.yml` agregamos `output-dir: docs` debajo de `project:`.
+2. En el proyecto, creamos un nuevo archivo que se llame `.nojekyll`, vacío (para decirle a GitHub Pages que no procese el sitio con Jekyll)
+3. En la pestaña de terminal ejecutamos `quarto render` para construir el sitio completo.
+3. Creamos un repositorio git (`usethis::use_git()`) 
+4. Subimos el repositorio a GitHub (`usethis::use_github()`)
+4. En GitHub, entramos a _Settings_, luego a _Pages_, y configuramos el repositorio para que genere la página desde `/docs`
+
+
+Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.
+
+![](img/website_3.png)
+
+
 
 Instrucciones para subir a GitHub
 https://quarto.org/docs/publishing/github-pages.html#render-to-docs
@@ -286,20 +342,71 @@ new site, elegir repo, poner _site, y listo
 
 
 
+----
+
+
+## Blog Hugo
+Un blog Hugo es otra forma de crear un blog desde R, que también utiliza documentos Quarto, pero cuyo sistema de construcción es distinto. Al ser [creados con Hugo,](https://gohugo.io) resultan sitios mucho más personalizables, pero por lo mismo también pueden ser más complejos de mantener.
+
+Como ejemplo, [mi propio sitio web](https://bastianolea.rbind.io) lo creé con Hugo, y [detallé parte del proceso en un post](https://bastianolea.rbind.io/blog/hugo_blog_nuevo/).
+
+Las instrucciones de este proceso se escapan un poco al objetivo de esta guía, pero les dejo el siguiente enlace, que corresponde al [tutorial oficial para crear un blog Hugo con el tema Apéro,](https://hugo-apero-docs.netlify.app/) que detalla paso por paso todas las acciones que hay que hacer para construir un blog con Hugo, personalizarlo, y publicarlo usando Netlify.
+
+![](img/hugo_0.png)
+
+Cabe mencionar que el tutorial mismo está construido en un blog Hugo Apéro.
+
+En resumidas cuentas, las instrucciones son:
+- Crear un nuevo proyecto de R
+- `install.packages("blogdown")`
+- `blogdown::install_hugo()`
+- Y ejecutar lo siguiente para crear tu blog Hugo Apéro:
+
+```r
+library(blogdown)
+new_site(theme = "hugo-apero/hugo-apero", 
+           format = "toml",
+           sample = FALSE,
+           empty_dirs = TRUE)
+```
+
+Luego ejecutas `blogdown::serve_site()` para previsualizar el blog creado.
+
+![](img/hugo_1.png)
+
+Para crear un post nuevo, tenemos una conveniente función que nos ayuda:
+```r
+# crear un post
+blogdown::new_post(title = "Nubes aleatorias en ggplot", 
+                   subdir = "blog/",
+                   file = "blog/ggplot_nubes/index.md", # define el "slug", la dirección url del post
+                   author = "Bastián Olea Herrera",
+                   tags = c("ggplot2", "gráficos", "curiosidades"))
+```
+
 
 ----
 
-## App Shiny
+
+## Apps Shiny
+Las aplicaciones Shiny son formas mucho más avanzadas y flexibles para poder compartir desarrollos en R con el mundo. Se trata de aplicaciones web completamente personalizables y que además son interactivas; significa que detrás de la aplicación web existe un proceso de R que está haciendo los cálculos para entregar resultados en tiempo real a sus usuarios.
+
+Acá te dejo dos tutoriales para aprender a usar Shiny:
+
 - [Tutorial Shiny](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shiny_1/)
 - [Tutorial publicar en Shinyapps](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shinyapps/)
 
+Y [comparto también un sitio mío](https://bastianolea.github.io/shiny_apps/) (creado con Quarto y alojado en GitHub Pages) para mostrar aplicaciones Shiny qeu he creado.
 
 ----
 
 ## Recursos:
 
 - [Tutorial Git con R](https://happygitwithr.com)
+- [Tutorial GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
+- [Tutorial sitios web Quarto](https://quarto.org/docs/websites/)
+- [Temas Quarto](https://quarto.org/docs/output-formats/html-themes.html#overview)
 - [Tutorial Blog Quarto](https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/)
 - [Tutorial Quarto y Netlifly](https://jadeyryan.com/blog/2024-02-19_beginner-quarto-netlify/)
-- [Temas Quarto](https://quarto.org/docs/output-formats/html-themes.html#overview)
-- [Tutorial GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
+
+Puedes encontrar más recursos sobre R [en mi sitio web!](https://bastianolea.rbind.io)
